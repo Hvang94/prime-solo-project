@@ -9,6 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route Includes
 const userRouter = require('./routes/user.router');
+const kaleaRouter = require('./routes/template.router')
 
 // Express Middleware
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
+app.use('/api/kalea', kaleaRouter)
 
 // Listen Server & Port
 app.listen(PORT, () => {

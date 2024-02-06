@@ -13,7 +13,7 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
+import Aboutme from '../AboutMe/AboutMe';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
@@ -41,11 +41,11 @@ function App() {
 
           {/* Visiting localhost:5173/about will show the about page. */}
           <Route
-            // shows AboutPage at all times (logged in or not)
+            // shows Aboutme at all times (logged in or not)
             exact
             path="/about"
           >
-            <AboutPage />
+            <Aboutme />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
