@@ -5,7 +5,7 @@
   align-items: center;
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: lavender;
   overflow: hidden;
 }
 
@@ -16,15 +16,16 @@
 .nav-title {
   font-size: 24px;
   font-weight: 700;
-  color: #f2f2f2;
+  color: black;
   padding-left: 10px;
   margin: 0;
+  text-align: center;
 }
 
 .navLink {
   display: inline-block;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: blue;
+  background-color: lavender;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
