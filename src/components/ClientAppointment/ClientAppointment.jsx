@@ -43,7 +43,6 @@ const ClientAppointment = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    // dispatch({ type: 'FETCH_CLIENT' });
     axios
       .get("/api/client")
       .then((response) => {
@@ -57,8 +56,9 @@ const ClientAppointment = () => {
   const reschedule = (history, newDate) => {
     const id = history.id;
     const date = newDate.$d;
+
     axios
-      .put(`/api/client/${id}`, date)
+      .patch(`/api/client/${id}`, { date })
       .then((response) => {
         console.log(response);
       })

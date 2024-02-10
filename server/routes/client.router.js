@@ -3,7 +3,7 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const sqlText = `SELECT * FROM "client_services"`;
+  const sqlText = `SELECT * FROM "client_services" ORDER BY date ASC`;
   pool
     .query(sqlText)
     .then((result) => {
@@ -50,10 +50,30 @@ router.delete("/:id", (req, res) => {
       res.sendStatus(500);
     });
 });
-router.put("/:id", (req, res) => {
+router.patch("/:id", (req, res) => {
   const updateService = req.params.id;
   const clientService = req.body.date;
   const sqlText = `UPDATE "client_services" SET "date" = $1 WHERE id = $2`;
+  const sqlParams = [
+    clientService,
+    updateService
+  ];
+
+  pool
+   .query(sqlText, sqlParams)
+   .then((result) => {
+      res.sendStatus(200);
+    })
+   .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const updateService = req.params.id;
+  const clientService = req.body.confirmed;
+  const sqlText = `UPDATE "client_services" SET "confirmed" = $1 WHERE id = $2`;
   const sqlParams = [
     clientService.date,
     updateService
