@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as React from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -133,6 +132,7 @@ const ClientAppointment = () => {
                             />
                             <button
                               onClick={() => reschedule(history, newDate)}
+                              onClose={handleClose}
                             >
                               Confirm
                             </button>
