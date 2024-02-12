@@ -26,15 +26,29 @@ router.post("/", (req, res) => {
   ];
 
   pool
-   .query(sqlText, sqlParams)
-   .then((result) => {
+    .query(sqlText, sqlParams)
+    .then((result) => {
       res.sendStatus(201);
     })
-   .catch((err) => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(500);
     });
 });
 
+router.delete("/:id", (req, res) => {
+  const sqlText = `DELETE FROM "services" where "id" = $1`;
+  const deleteService = req.params.id;
+  const sqlParams = [deleteService];
+  pool
+    .query(sqlText, sqlParams)
+
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 module.exports = router;

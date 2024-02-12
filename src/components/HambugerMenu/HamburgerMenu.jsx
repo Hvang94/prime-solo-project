@@ -48,7 +48,9 @@ export default function Hamburger() {
         <Link to="/ClientAppointment/">
           <MenuItem onClick={handleClose}>View Appointments</MenuItem>
         </Link>
+        <Link to="login">
         <MenuItem onClick={handleClose}>Login/Register</MenuItem>
+        </Link>
       </Menu>
     </div>
   );

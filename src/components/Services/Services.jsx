@@ -40,8 +40,7 @@ const Services = () => {
   const [total_cost, setTotal_cost] = useState([]);
   const [description, setDescription] = useState([]);
 
-  const formData = {image, service, total_cost, description}
-
+  const formData = { image, service, total_cost, description };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -60,14 +59,27 @@ const Services = () => {
     event.preventDefault();
     // dispatch({ type: "POST_SERVICE", payload: formData });
     axios
-   .post("/api/kalea", formData)
-   .then((response) => {
+      .post("/api/kalea", formData)
+      .then((response) => {
         console.log(response);
       })
-   .catch((error) => {
+      .catch((error) => {
         console.log(error);
       });
   };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`/api/kalea/${id}`)
+      .then((response) => {
+        console.log("good service delete", response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handelEdit = () => {};
 
   return (
     <>
@@ -135,6 +147,56 @@ const Services = () => {
                   <Link to="/Confirmation/">
                     <button onClick={() => onClick(service)}>Book me</button>
                   </Link>
+                </TableCell>
+                <TableCell>
+                <Button onClick={handleOpen}>Edit</Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  <form onSubmit={handleSubmit}>
+                    <input
+                      value={image}
+                      type="text"
+                      id="image"
+                      placeholder="Image"
+                      onChange={(e) => setImage(e.target.value)}
+                    />
+                    <input
+                      value={service}
+                      type="text"
+                      id="service"
+                      placeholder="Service Name"
+                      onChange={(e) => setService(e.target.value)}
+                    />
+                    <input
+                      value={description}
+                      type="text"
+                      id="description"
+                      placeholder="Description"
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <input
+                      value={total_cost}
+                      type="text"
+                      id="price"
+                      placeholder="Price"
+                      onChange={(e) => setTotal_cost(e.target.value)}
+                    />
+                    <button type="submit">Add</button>
+                  </form>
+                </Typography>
+              </Box>
+            </Modal>
+                </TableCell>
+                <TableCell>
+                  <button onClick={() => handleDelete(service.id)}>
+                    Delete
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
