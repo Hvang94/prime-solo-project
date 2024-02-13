@@ -2,10 +2,6 @@ import "./Services.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import * as React from "react";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -87,14 +83,15 @@ const Services = () => {
     // dispatch({ type: "POST_SERVICE", payload: formData });
     console.log(service);
     axios
-      .post("/api/kalea", formData)
+      .post("/api/services", formData)
       .then((response) => {
         console.log(response);
         setImage("");
         setService("");
         setTotal_cost("");
         setDescription("");
-        setOpen(false)
+        setOpen(false);
+        dispatch({ type: "FETCH_SERVICES" });
       })
       .catch((error) => {
         console.log(error);
@@ -103,9 +100,10 @@ const Services = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`/api/kalea/${id}`)
+      .delete(`/api/services/${id}`)
       .then((response) => {
         console.log("good service delete", response);
+        dispatch({ type: "FETCH_SERVICES" });
       })
       .catch((err) => {
         console.log(err);
@@ -114,16 +112,16 @@ const Services = () => {
 
   // ! MAKE EDIT FEATURE
   const handelEdit = () => {
-
     axios
-      .put("/api/kalea/${id}", formData)
+      .put(`/api/services/${id}`, formData)
       .then((response) => {
         console.log(response);
         setImage("");
         setService("");
         setTotal_cost("");
         setDescription("");
-        setOpenEdit(false)
+        setOpenEdit(false);
+        dispatch({ type: "FETCH_SERVICES" });
       })
       .catch((error) => {
         console.log(error);
@@ -132,13 +130,11 @@ const Services = () => {
 
   return (
     <>
+      <h3>Services</h3>
+      {isAdmin === true && <Button onClick={handleOpen}>Add Service</Button>}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <h3>Services</h3>
-            {isAdmin === true && (
-              <Button onClick={handleOpen}>Add Service</Button>
-            )}
             <Modal
               open={open}
               onClose={handleClose}
@@ -218,7 +214,12 @@ const Services = () => {
                       placeholder="Price"
                       onChange={(e) => setTotal_cost(e.target.value)}
                     />
-                    <button type="submit" onClick={() => handelEdit(service.id)}>Save</button>
+                    <button
+                      type="submit"
+                      onClick={() => handelEdit(service.id)}
+                    >
+                      Save
+                    </button>
                   </form>
                 </Typography>
               </Box>

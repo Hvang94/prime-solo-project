@@ -47,7 +47,7 @@ const ClientAppointment = () => {
 
   const renderAppointments = () => {
     axios
-    .get("/api/client")
+    .get("/api/appointments")
     .then((response) => {
       setClientHistory(response.data);
     })
@@ -62,7 +62,7 @@ const ClientAppointment = () => {
     const date = newDate.$d;
 
     axios
-      .patch(`/api/client/${id}`, { date })
+      .patch(`/api/appointments/${id}`, { date })
       .then((response) => {
         console.log(response);
       })
@@ -75,7 +75,7 @@ const ClientAppointment = () => {
     const id = history.id;
 
     axios
-      .delete(`/api/client/${id}`)
+      .delete(`/api/appointments/${id}`)
       .then((response) => {
         console.log("DELETE good");
         renderAppointments();

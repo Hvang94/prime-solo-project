@@ -39,21 +39,26 @@ const AdminAppointment = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    axios
-      .get("/api/client")
-      .then((response) => {
-        setConfirmedServices(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    renderAppointments()
   }, []);
+
+  const renderAppointments = () => {
+    axios
+    .get("/api/appointments")
+    .then((response) => {
+      setConfirmedServices(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
   const confirm = (id, confirmed) => {
     axios
-      .put(`/api/client/${id}`, { confirmed: true })
+      .put(`/api/appointments/${id}`, { confirmed: true })
       .then((response) => {
         console.log(response);
+        renderAppointments()
       })
       .catch((error) => {
         console.log(error);
@@ -64,9 +69,10 @@ const AdminAppointment = () => {
     const date = newDate.$d;
 
     axios
-      .patch(`/api/client/${id}`, { date })
+      .patch(`/api/appointments/${id}`, { date })
       .then((response) => {
         console.log(response);
+        renderAppointments()
       })
       .catch((error) => {
         console.log(error);

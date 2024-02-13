@@ -20,7 +20,7 @@ const Confirmation = () => {
     alert("Thank you!");
     // await dispatch({type: "POST_CLIENT", payload: { image, service, total_cost, description }})
     axios
-      .post("/api/client", { image, service, total_cost, description, date })
+      .post("/api/appointments", { image, service, total_cost, description, date })
       .then((response) => {
         console.log(response);
       })

@@ -3,7 +3,7 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const sqlText = `SELECT * FROM "client_services" ORDER BY date ASC`;
+  const sqlText = `SELECT * FROM "appointments" ORDER BY date ASC`;
   // ! rename client_services to appointment and change DB name
   pool
     .query(sqlText)
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  const sqlText = `SELECT * FROM "client_services" ORDER BY date ASC`;
+  const sqlText = `SELECT * FROM "appointments" ORDER BY date ASC`;
 // ! change sqlText to join user and appointments where id = user_id
   pool
     .query(sqlText)
@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const clientService = req.body;
-  const sqlText = `INSERT INTO "client_services" ("image", "service", "total_cost", "description", "date") VALUES ($1, $2, $3, $4, $5)`;
+  const sqlText = `INSERT INTO "appointments" ("image", "service", "total_cost", "description", "date") VALUES ($1, $2, $3, $4, $5)`;
   const sqlParams = [
     clientService.image,
     clientService.service,
@@ -55,7 +55,7 @@ router.post("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const deleteService = req.params.id;
-  const sqlText = `DELETE FROM "client_services" WHERE id = $1`;
+  const sqlText = `DELETE FROM "appointments" WHERE id = $1`;
   pool
     .query(sqlText, [deleteService])
     .then((result) => {
@@ -69,7 +69,7 @@ router.delete("/:id", (req, res) => {
 router.patch("/:id", (req, res) => {
   const updateService = req.params.id;
   const clientService = req.body.date;
-  const sqlText = `UPDATE "client_services" SET "date" = $1 WHERE id = $2`;
+  const sqlText = `UPDATE "appointments" SET "date" = $1 WHERE id = $2`;
   const sqlParams = [
     clientService,
     updateService
@@ -89,7 +89,7 @@ router.patch("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const updateService = req.params.id;
   const clientService = req.body.confirmed;
-  const sqlText = `UPDATE "client_services" SET "confirmed" = $1 WHERE id = $2`;
+  const sqlText = `UPDATE "appointments" SET "confirmed" = $1 WHERE id = $2`;
   const sqlParams = [
     clientService.date,
     updateService

@@ -3,7 +3,7 @@ import { put, takeLatest } from "redux-saga/effects";
 
 function* fetchServices() {
   try {
-    const response = yield axios.get("/api/kalea");
+    const response = yield axios.get("/api/services");
     yield put({ type: "SET_SERVICES", payload: response.data });
   } catch (error) {
     console.log("GET services error", error);
@@ -12,7 +12,7 @@ function* fetchServices() {
 
 function* fetchClient() {
     try {
-        const response = yield axios.get("/api/client");
+        const response = yield axios.get("/api/appointments");
         yield put({ type: "SET_CLIENT", payload: response.data });
     } catch (error) {
         console.log("GET client error", error);
@@ -21,7 +21,7 @@ function* fetchClient() {
 
 function* postClient() {
     try {
-        const response = yield axios.post("/api/client");
+        const response = yield axios.post("/api/appointments");
         yield put({ type: "FETCH_CLIENT", payload: response.data });
     } catch (error) {
         console.log("POST client service error", error);
