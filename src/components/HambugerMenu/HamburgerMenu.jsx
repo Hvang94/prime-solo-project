@@ -4,8 +4,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import LogOutButton from "../LogOutButton/LogOutButton";
+import { useSelector } from "react-redux";
 
 export default function Hamburger() {
+  const isAdmin = useSelector((store) => store.user.admin);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -46,11 +48,19 @@ export default function Hamburger() {
         <Link to="/Services/">
           <MenuItem onClick={handleClose}>Services</MenuItem>
         </Link>
-        <Link to="/ClientAppointment/">
-          <MenuItem onClick={handleClose}>View Appointments</MenuItem>
-        </Link>
+
+        {isAdmin === true ? (
+          <Link to="/AdminAppointment/">
+            <MenuItem onClick={handleClose}>Admin</MenuItem>
+          </Link>
+        ) : (
+          <Link to="/ClientAppointment/">
+            <MenuItem onClick={handleClose}>View Appointments</MenuItem>
+          </Link>
+        )}
+
         <Link to="login">
-        <MenuItem onClick={handleClose}>Login/Register</MenuItem>
+          <MenuItem onClick={handleClose}>Login/Register</MenuItem>
         </Link>
         <LogOutButton />
       </Menu>

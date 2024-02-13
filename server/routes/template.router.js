@@ -57,7 +57,7 @@ router.delete("/:id", (req, res) => {
 router.patch("/:id", (req, res) => {
   const serviceId = req.params.id; 
   const { image, service, total_cost, description } = req.body; 
-  const sqlText = `UPDATE "services" SET image = $1, service = $2, total_cost = $3, description = $4 WHERE "id" = $5`;
+  const sqlText = `UPDATE "services" SET "image" = $1, "service" = $2, "total_cost" = $3, "description" = $4 WHERE "id" = $5`;
   const sqlParams = [image, service, total_cost, description, serviceId];
 
   pool
