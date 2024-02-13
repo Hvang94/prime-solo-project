@@ -35,6 +35,7 @@ const Services = () => {
   const [service, setService] = useState("");
   const [total_cost, setTotal_cost] = useState("");
   const [description, setDescription] = useState("");
+  const [id, setId] = useState("");
 
   const formData = { image, service, total_cost, description };
 
@@ -62,6 +63,7 @@ const Services = () => {
   };
 
   const handleOpenEdit = (service) => {
+    setId(service.id);
     setImage(service.image);
     setService(service.service);
     setTotal_cost(service.total_cost);
@@ -110,9 +112,11 @@ const Services = () => {
       });
   };
 
-  const handelEdit = (id) => {
+  const handleEdit = (event, id, service, image, description, total_cost) => {
+    event.preventDefault();
+    const editFormData = { service, image, description, total_cost };
     axios
-      .patch(`/api/services/${id}`, formData)
+      .put(`/api/services/${id}`, editFormData)
       .then((response) => {
         console.log(response);
         setImage("");
@@ -190,7 +194,18 @@ const Services = () => {
             >
               <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                  <form onSubmit={handleSubmit}>
+                  <form
+                    onSubmit={() =>
+                      handleEdit(
+                        event,
+                        id,
+                        service,
+                        image,
+                        description,
+                        total_cost
+                      )
+                    }
+                  >
                     <input
                       value={image}
                       type="text"
@@ -222,7 +237,7 @@ const Services = () => {
                     <Button
                       variant="contained"
                       type="submit"
-                      onClick={() => handelEdit(service.id)}
+                      // onClick={() => handleEdit(service)}
                     >
                       Save
                     </Button>

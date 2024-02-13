@@ -73,22 +73,19 @@ function App() {
           </Route>
 
           {isAdmin === true ? (
-            <Route exact path="/AdminAppointment">
-              <AdminAppointment />
-            </Route>
+            <ProtectedRoute>
+              <Route exact path="/AdminAppointment">
+                <AdminAppointment />
+              </Route>
+            </ProtectedRoute>
           ) : (
-            <Route exact path="/ClientAppointment">
-              <ClientAppointment />
-            </Route>
+            <ProtectedRoute>
+              <Route exact path="/ClientAppointment">
+                <ClientAppointment />
+              </Route>
+            </ProtectedRoute>
           )}
 
-          {/* <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/AdminAppointment"
-          >
-            <AdminAppointment />
-          </ProtectedRoute> */}
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
