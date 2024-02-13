@@ -42,20 +42,19 @@ const ClientAppointment = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    renderAppointments()
+    renderAppointments();
   }, []);
 
   const renderAppointments = () => {
     axios
-    .get("/api/appointments")
-    .then((response) => {
-      setClientHistory(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-
+      .get("/api/appointments")
+      .then((response) => {
+        setClientHistory(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const reschedule = (history, newDate) => {
     const id = history.id;
@@ -114,7 +113,9 @@ const ClientAppointment = () => {
                   <TableCell align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
-                  <Button onClick={handleOpen}>Reschedule</Button>
+                  <Button variant="contained" onClick={handleOpen}>
+                    Reschedule
+                  </Button>
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -137,6 +138,7 @@ const ClientAppointment = () => {
                               label="Basic date time picker"
                             />
                             <Button
+                              variant="contained"
                               onClick={() => reschedule(history, newDate)}
                               onClose={handleClose}
                             >
@@ -147,7 +149,9 @@ const ClientAppointment = () => {
                       </Typography>
                     </Box>
                   </Modal>
-                  <Button onClick={() => cancel(history)}>Cancel</Button>
+                  <Button variant="contained" onClick={() => cancel(history)}>
+                    Cancel
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

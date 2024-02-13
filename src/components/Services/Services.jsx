@@ -110,10 +110,9 @@ const Services = () => {
       });
   };
 
-  // ! MAKE EDIT FEATURE
-  const handelEdit = () => {
+  const handelEdit = (id) => {
     axios
-      .put(`/api/services/${id}`, formData)
+      .patch(`/api/services/${id}`, formData)
       .then((response) => {
         console.log(response);
         setImage("");
@@ -131,7 +130,11 @@ const Services = () => {
   return (
     <>
       <h3>Services</h3>
-      {isAdmin === true && <Button onClick={handleOpen}>Add Service</Button>}
+      {isAdmin === true && (
+        <Button variant="contained" onClick={handleOpen}>
+          Add Service
+        </Button>
+      )}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -172,7 +175,9 @@ const Services = () => {
                       placeholder="Price"
                       onChange={(e) => setTotal_cost(e.target.value)}
                     />
-                    <button type="submit">Add</button>
+                    <Button variant="contained" type="submit">
+                      Add
+                    </Button>
                   </form>
                 </Typography>
               </Box>
@@ -214,12 +219,13 @@ const Services = () => {
                       placeholder="Price"
                       onChange={(e) => setTotal_cost(e.target.value)}
                     />
-                    <button
+                    <Button
+                      variant="contained"
                       type="submit"
                       onClick={() => handelEdit(service.id)}
                     >
                       Save
-                    </button>
+                    </Button>
                   </form>
                 </Typography>
               </Box>
@@ -239,19 +245,30 @@ const Services = () => {
                 <TableCell align="left">${service.total_cost}</TableCell>
                 <TableCell>
                   <Link to="/Confirmation/">
-                    <Button onClick={() => onClick(service)}>Book me</Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => onClick(service)}
+                    >
+                      Book me
+                    </Button>
                   </Link>
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (
-                    <Button onClick={() => handleOpenEdit(service)}>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleOpenEdit(service)}
+                    >
                       Edit
                     </Button>
                   )}
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (
-                    <Button onClick={() => handleDelete(service.id)}>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleDelete(service.id)}
+                    >
                       Delete
                     </Button>
                   )}

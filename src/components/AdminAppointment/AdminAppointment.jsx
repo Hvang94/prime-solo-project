@@ -87,10 +87,10 @@ const AdminAppointment = () => {
           <TableHead>
             <TableRow>
               <TableCell>Service</TableCell>
-              <TableCell align="left">Description</TableCell>
               <TableCell align="left">Date & Time</TableCell>
               <TableCell align="left">Cost</TableCell>
               <TableCell align="left">Status</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,12 +108,12 @@ const AdminAppointment = () => {
                   <TableCell align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
-                  <button
+                  <Button variant="contained"
                     onClick={() => confirm(service.id, service.confirmed)}
                   >
                     Confirm
-                  </button>
-                  <Button onClick={handleOpen}>Reschedule</Button>
+                  </Button>
+                  <Button variant="contained" onClick={handleOpen}>Reschedule</Button>
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -135,17 +135,17 @@ const AdminAppointment = () => {
                               }
                               label="Basic date time picker"
                             />
-                            <button
+                            <Button variant="contained"
                               onClick={() => reschedule(service.id, newDate)}
                             >
                               Confirm
-                            </button>
+                            </Button>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Typography>
                     </Box>
                   </Modal>
-                  <button onClick={() => cancel(history)}>Cancel</button>
+                  <Button variant="contained" onClick={() => cancel(history)}>Cancel</Button>
                 </TableCell>
               </TableRow>
             ))}
