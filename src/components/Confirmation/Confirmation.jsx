@@ -17,7 +17,7 @@ const Confirmation = () => {
   const date = dateTime.$d;
 
   const confirm = async () => {
-    await alert("Thank you!");
+    alert("Thank you!");
     // await dispatch({type: "POST_CLIENT", payload: { image, service, total_cost, description }})
     axios
       .post("/api/client", { image, service, total_cost, description, date })
@@ -44,9 +44,9 @@ const Confirmation = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
-      {/* <Link to={"/Home"}> */}
+      <Link to={"/home"}>
       <button onClick={() => confirm()}>Confirm</button>
-      {/* </Link> */}
+      </Link>
     </div>
   );
 };

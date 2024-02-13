@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   const sqlText = `SELECT * FROM "client_services" ORDER BY date ASC`;
+  // ! rename client_services to appointment and change DB name
   pool
     .query(sqlText)
     .then((result) => {
@@ -14,6 +15,21 @@ router.get("/", (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.get("/", (req, res) => {
+  const sqlText = `SELECT * FROM "client_services" ORDER BY date ASC`;
+// ! change sqlText to join user and appointments where id = user_id
+  pool
+    .query(sqlText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 
 router.post("/", (req, res) => {
   const clientService = req.body;

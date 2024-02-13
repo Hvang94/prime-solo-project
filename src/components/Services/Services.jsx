@@ -35,20 +35,47 @@ const style = {
 const Services = () => {
   const dispatch = useDispatch();
   const services = useSelector((store) => store.services);
-  const [image, setImage] = useState([]);
-  const [service, setService] = useState([]);
-  const [total_cost, setTotal_cost] = useState([]);
-  const [description, setDescription] = useState([]);
+  const [image, setImage] = useState("");
+  const [service, setService] = useState("");
+  const [total_cost, setTotal_cost] = useState("");
+  const [description, setDescription] = useState("");
 
   const formData = { image, service, total_cost, description };
 
+  const isAdmin = useSelector((store) => store.user.admin);
+
+  // Add service modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setImage("");
+    setService("");
+    setTotal_cost("");
+    setDescription("");
+  };
+
+  // Edit service modal
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    setImage("");
+    setService("");
+    setTotal_cost("");
+    setDescription("");
+  };
+
+  const handleOpenEdit = (service) => {
+    setImage(service.image);
+    setService(service.service);
+    setTotal_cost(service.total_cost);
+    setDescription(service.description);
+    setOpenEdit(true);
+  };
 
   useEffect(() => {
     dispatch({ type: "FETCH_SERVICES" });
-  }, [dispatch]);
+  }, []);
 
   const onClick = (service) => {
     console.log(service);
@@ -58,10 +85,16 @@ const Services = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // dispatch({ type: "POST_SERVICE", payload: formData });
+    console.log(service);
     axios
       .post("/api/kalea", formData)
       .then((response) => {
         console.log(response);
+        setImage("");
+        setService("");
+        setTotal_cost("");
+        setDescription("");
+        setOpen(false)
       })
       .catch((error) => {
         console.log(error);
@@ -79,7 +112,23 @@ const Services = () => {
       });
   };
 
-  const handelEdit = () => {};
+  // ! MAKE EDIT FEATURE
+  const handelEdit = () => {
+
+    axios
+      .put("/api/kalea/${id}", formData)
+      .then((response) => {
+        console.log(response);
+        setImage("");
+        setService("");
+        setTotal_cost("");
+        setDescription("");
+        setOpenEdit(false)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -87,7 +136,9 @@ const Services = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <h3>Services</h3>
-            <Button onClick={handleOpen}>Add Service</Button>
+            {isAdmin === true && (
+              <Button onClick={handleOpen}>Add Service</Button>
+            )}
             <Modal
               open={open}
               onClose={handleClose}
@@ -126,6 +177,48 @@ const Services = () => {
                       onChange={(e) => setTotal_cost(e.target.value)}
                     />
                     <button type="submit">Add</button>
+                  </form>
+                </Typography>
+              </Box>
+            </Modal>
+            <Modal
+              open={openEdit}
+              onClose={handleCloseEdit}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  <form onSubmit={handleSubmit}>
+                    <input
+                      value={image}
+                      type="text"
+                      id="image"
+                      placeholder="Image"
+                      onChange={(e) => setImage(e.target.value)}
+                    />
+                    <input
+                      value={service}
+                      type="text"
+                      id="service"
+                      placeholder="Service Name"
+                      onChange={(e) => setService(e.target.value)}
+                    />
+                    <input
+                      value={description}
+                      type="text"
+                      id="description"
+                      placeholder="Description"
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <input
+                      value={total_cost}
+                      type="text"
+                      id="price"
+                      placeholder="Price"
+                      onChange={(e) => setTotal_cost(e.target.value)}
+                    />
+                    <button type="submit" onClick={() => handelEdit(service.id)}>Save</button>
                   </form>
                 </Typography>
               </Box>
@@ -145,58 +238,22 @@ const Services = () => {
                 <TableCell align="left">${service.total_cost}</TableCell>
                 <TableCell>
                   <Link to="/Confirmation/">
-                    <button onClick={() => onClick(service)}>Book me</button>
+                    <Button onClick={() => onClick(service)}>Book me</Button>
                   </Link>
                 </TableCell>
                 <TableCell>
-                <Button onClick={handleOpen}>Edit</Button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      value={image}
-                      type="text"
-                      id="image"
-                      placeholder="Image"
-                      onChange={(e) => setImage(e.target.value)}
-                    />
-                    <input
-                      value={service}
-                      type="text"
-                      id="service"
-                      placeholder="Service Name"
-                      onChange={(e) => setService(e.target.value)}
-                    />
-                    <input
-                      value={description}
-                      type="text"
-                      id="description"
-                      placeholder="Description"
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <input
-                      value={total_cost}
-                      type="text"
-                      id="price"
-                      placeholder="Price"
-                      onChange={(e) => setTotal_cost(e.target.value)}
-                    />
-                    <button type="submit">Add</button>
-                  </form>
-                </Typography>
-              </Box>
-            </Modal>
+                  {isAdmin === true && (
+                    <Button onClick={() => handleOpenEdit(service)}>
+                      Edit
+                    </Button>
+                  )}
                 </TableCell>
                 <TableCell>
-                  <button onClick={() => handleDelete(service.id)}>
-                    Delete
-                  </button>
+                  {isAdmin === true && (
+                    <Button onClick={() => handleDelete(service.id)}>
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

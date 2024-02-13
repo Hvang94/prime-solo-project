@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
+import LogOutButton from "../LogOutButton/LogOutButton";
 
 export default function Hamburger() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,7 +24,7 @@ export default function Hamburger() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Dashboard
+        🐼
       </Button>
       <Menu
         id="basic-menu"
@@ -34,13 +35,13 @@ export default function Hamburger() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <Link to="/Home/">
+        <Link to="/home/">
           <MenuItem onClick={handleClose}>Home</MenuItem>
         </Link>
 
-        <Link to="/about/">
+        {/* <Link to="/about/">
           <MenuItem onClick={handleClose}>About Me</MenuItem>
-        </Link>
+        </Link> */}
 
         <Link to="/Services/">
           <MenuItem onClick={handleClose}>Services</MenuItem>
@@ -51,6 +52,7 @@ export default function Hamburger() {
         <Link to="login">
         <MenuItem onClick={handleClose}>Login/Register</MenuItem>
         </Link>
+        <LogOutButton />
       </Menu>
     </div>
   );

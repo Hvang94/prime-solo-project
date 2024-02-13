@@ -110,3 +110,10 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+p {
+  margin: 30px;
+}
+.portrait{
+  margin: 30px;
+  width: 15%;
+}

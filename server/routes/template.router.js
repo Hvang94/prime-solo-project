@@ -1,6 +1,9 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require("../modules/authentication-middleware");
 
 router.get("/", (req, res) => {
   const sqlText = `SELECT * FROM "services"`;
@@ -48,6 +51,23 @@ router.delete("/:id", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const updateServiceId = req.params.id; 
+  const { image, service, total_cost, description } = req.body; 
+  const sqlText = `UPDATE "services" SET image = $1, service = $2, total_cost = $3, description = $4 WHERE "id" = $5`;
+  const sqlParams = [image, service, total_cost, description, updateServiceId];
+
+  pool
+    .query(sqlText, sqlParams)
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
     });
 });
 

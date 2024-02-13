@@ -1,7 +1,7 @@
 .nav {
   /* flex box layout */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 
   margin: 0 0 30px;
@@ -40,4 +40,9 @@
 
 .navLink:hover {
   background-color: #008183;
+}
+
+.logo{
+width: 15%;
+margin: 0 auto;
 }

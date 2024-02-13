@@ -42,15 +42,20 @@ const ClientAppointment = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    axios
-      .get("/api/client")
-      .then((response) => {
-        setClientHistory(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    renderAppointments()
   }, []);
+
+  const renderAppointments = () => {
+    axios
+    .get("/api/client")
+    .then((response) => {
+      setClientHistory(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
 
   const reschedule = (history, newDate) => {
     const id = history.id;
@@ -73,6 +78,7 @@ const ClientAppointment = () => {
       .delete(`/api/client/${id}`)
       .then((response) => {
         console.log("DELETE good");
+        renderAppointments();
       })
       .catch((error) => {
         console.log(error);
@@ -130,18 +136,18 @@ const ClientAppointment = () => {
                               }
                               label="Basic date time picker"
                             />
-                            <button
+                            <Button
                               onClick={() => reschedule(history, newDate)}
                               onClose={handleClose}
                             >
                               Confirm
-                            </button>
+                            </Button>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Typography>
                     </Box>
                   </Modal>
-                  <button onClick={() => cancel(history)}>Cancel</button>
+                  <Button onClick={() => cancel(history)}>Cancel</Button>
                 </TableCell>
               </TableRow>
             ))}
