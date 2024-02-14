@@ -15,6 +15,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const style = {
   position: "absolute",
@@ -29,17 +32,19 @@ const style = {
 };
 
 const Services = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const services = useSelector((store) => store.services);
   const [image, setImage] = useState("");
   const [service, setService] = useState("");
-  const [total_cost, setTotal_cost] = useState("");
+  const [cost, setCost] = useState("");
   const [description, setDescription] = useState("");
   const [id, setId] = useState("");
 
-  const formData = { image, service, total_cost, description };
+  const formData = { image, service, cost, description };
 
   const isAdmin = useSelector((store) => store.user.admin);
+  const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   // Add service modal
   const [open, setOpen] = React.useState(false);
@@ -48,7 +53,7 @@ const Services = () => {
     setOpen(false);
     setImage("");
     setService("");
-    setTotal_cost("");
+    setCost("");
     setDescription("");
   };
 
@@ -58,7 +63,7 @@ const Services = () => {
     setOpenEdit(false);
     setImage("");
     setService("");
-    setTotal_cost("");
+    setCost("");
     setDescription("");
   };
 
@@ -66,7 +71,7 @@ const Services = () => {
     setId(service.id);
     setImage(service.image);
     setService(service.service);
-    setTotal_cost(service.total_cost);
+    setCost(service.cost);
     setDescription(service.description);
     setOpenEdit(true);
   };
@@ -90,7 +95,7 @@ const Services = () => {
         console.log(response);
         setImage("");
         setService("");
-        setTotal_cost("");
+        setCost("");
         setDescription("");
         setOpen(false);
         dispatch({ type: "FETCH_SERVICES" });
@@ -112,16 +117,16 @@ const Services = () => {
       });
   };
 
-  const handleEdit = (event, id, service, image, description, total_cost) => {
+  const handleEdit = (event, id, service, image, description, cost) => {
     event.preventDefault();
-    const editFormData = { service, image, description, total_cost };
+    const editFormData = { service, image, description, cost };
     axios
       .put(`/api/services/${id}`, editFormData)
       .then((response) => {
         console.log(response);
         setImage("");
         setService("");
-        setTotal_cost("");
+        setCost("");
         setDescription("");
         setOpenEdit(false);
         dispatch({ type: "FETCH_SERVICES" });
@@ -173,11 +178,11 @@ const Services = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                     <input
-                      value={total_cost}
+                      value={cost}
                       type="text"
                       id="price"
                       placeholder="Price"
-                      onChange={(e) => setTotal_cost(e.target.value)}
+                      onChange={(e) => setCost(e.target.value)}
                     />
                     <Button variant="contained" type="submit">
                       Add
@@ -196,14 +201,7 @@ const Services = () => {
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   <form
                     onSubmit={() =>
-                      handleEdit(
-                        event,
-                        id,
-                        service,
-                        image,
-                        description,
-                        total_cost
-                      )
+                      handleEdit(event, id, service, image, description, cost)
                     }
                   >
                     <input
@@ -228,17 +226,13 @@ const Services = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                     <input
-                      value={total_cost}
+                      value={cost}
                       type="text"
                       id="price"
                       placeholder="Price"
-                      onChange={(e) => setTotal_cost(e.target.value)}
+                      onChange={(e) => setCost(e.target.value)}
                     />
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      // onClick={() => handleEdit(service)}
-                    >
+                    <Button variant="contained" type="submit">
                       Save
                     </Button>
                   </form>
@@ -257,16 +251,18 @@ const Services = () => {
                   <img src={service.image} />
                 </TableCell>
                 <TableCell align="left">{service.description}</TableCell>
-                <TableCell align="left">${service.total_cost}</TableCell>
+                <TableCell align="left">${service.cost}</TableCell>
                 <TableCell>
-                  <Link to="/Confirmation/">
-                    <Button
-                      variant="contained"
-                      onClick={() => onClick(service)}
-                    >
-                      Book me
-                    </Button>
-                  </Link>
+                  {isAdmin === false && (
+                    <Link to="/Confirmation/">
+                      <Button
+                        variant="contained"
+                        onClick={() => onClick(service)}
+                      >
+                        Book me
+                      </Button>
+                    </Link>
+                  )}
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (

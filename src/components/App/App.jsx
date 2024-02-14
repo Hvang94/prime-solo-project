@@ -73,16 +73,12 @@ function App() {
           </Route>
 
           {isAdmin === true ? (
-            <ProtectedRoute>
-              <Route exact path="/AdminAppointment">
-                <AdminAppointment />
-              </Route>
+            <ProtectedRoute exact path="/AdminAppointment">
+              <AdminAppointment />
             </ProtectedRoute>
           ) : (
-            <ProtectedRoute>
-              <Route exact path="/ClientAppointment">
-                <ClientAppointment />
-              </Route>
+            <ProtectedRoute exact path="/ClientAppointment">
+              <ClientAppointment />
             </ProtectedRoute>
           )}
 

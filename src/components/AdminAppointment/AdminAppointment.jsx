@@ -46,6 +46,7 @@ const AdminAppointment = () => {
     axios
     .get("/api/appointments")
     .then((response) => {
+      console.log(response.data);
       setConfirmedServices(response.data);
     })
     .catch((error) => {
@@ -53,9 +54,10 @@ const AdminAppointment = () => {
     });
   }
 
-  const confirm = (id, confirmed) => {
+  const confirm = (id, status) => {
+    
     axios
-      .put(`/api/appointments/${id}`, { confirmed: true })
+      .put(`/api/appointments/${id}`, { status: true })
       .then((response) => {
         console.log(response);
         renderAppointments()
@@ -86,6 +88,7 @@ const AdminAppointment = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>Client Name</TableCell>
               <TableCell>Service</TableCell>
               <TableCell align="left">Date & Time</TableCell>
               <TableCell align="left">Cost</TableCell>
@@ -96,20 +99,21 @@ const AdminAppointment = () => {
           <TableBody>
             {confirmedServices.map((service) => (
               <TableRow
-                key={service.id}
+                key={service.appointment_id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                <TableCell align="left">{service.username}</TableCell>
                 <TableCell align="left">{service.service}</TableCell>
                 <TableCell align="left">{service.date}</TableCell>
-                <TableCell align="left">${service.total_cost}</TableCell>
-                {service.confirmed === false ? (
+                <TableCell align="left">${service.cost}</TableCell>
+                {service.status === false ? (
                   <TableCell align="left">Pending</TableCell>
                 ) : (
                   <TableCell align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
                   <Button variant="contained"
-                    onClick={() => confirm(service.id, service.confirmed)}
+                    onClick={() => confirm(service.appointment_id, service.status)}
                   >
                     Confirm
                   </Button>

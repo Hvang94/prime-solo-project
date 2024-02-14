@@ -3,44 +3,56 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const sqlText = `SELECT * FROM "appointments" ORDER BY date ASC`;
-  // ! rename client_services to appointment and change DB name
+  if (!req.isAuthenticated() || !req.user) {
+    // If the user is not authenticated, return an unauthorized status
+    return res.sendStatus(401);
+  }
+
+  const isAdmin = req.user.admin;
+
+  let sqlText = `
+  SELECT a.id as appointment_id, s.service, s.description, a.status, a.date, u.username
+  FROM "appointments" a
+  JOIN "services" s ON a.service_id = s.id
+  JOIN "user" u ON a.user_id = u.id
+`;
+
+  const sqlParams = [];
+
+  // If the user is not an admin, add a WHERE clause to filter by user_id
+  if (!isAdmin) {
+    sqlText += ` WHERE a.user_id = $1`;
+    sqlParams.push(req.user.id); // Add the user's ID to the parameters array
+  }
+
+  // Add an ORDER BY clause to both admin and regular user queries
+  sqlText += ` ORDER BY a.date ASC;`;
+
   pool
-    .query(sqlText)
+    .query(sqlText, sqlParams)
     .then((result) => {
       res.send(result.rows);
+      console.log(result.rows);
     })
     .catch((err) => {
       console.log(err);
       res.sendStatus(500);
     });
 });
-
-router.get("/", (req, res) => {
-  const sqlText = `SELECT * FROM "appointments" ORDER BY date ASC`;
-// ! change sqlText to join user and appointments where id = user_id
-  pool
-    .query(sqlText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
-});
-
 
 router.post("/", (req, res) => {
+  console.log("Request body:", req.body);
+
   const clientService = req.body;
-  const sqlText = `INSERT INTO "appointments" ("image", "service", "total_cost", "description", "date") VALUES ($1, $2, $3, $4, $5)`;
+  const sqlText = `INSERT INTO "appointments" ("user_id", "service_id", "status", "date") VALUES ($1, $2, $3, $4)`;
   const sqlParams = [
-    clientService.image,
-    clientService.service,
-    clientService.total_cost,
-    clientService.description,
+    clientService.user_id,
+    clientService.service_id,
+    clientService.status,
     clientService.date,
   ];
+
+  console.log("SQL Parameters:", sqlParams);
 
   pool
     .query(sqlText, sqlParams)
@@ -70,37 +82,33 @@ router.patch("/:id", (req, res) => {
   const updateService = req.params.id;
   const clientService = req.body.date;
   const sqlText = `UPDATE "appointments" SET "date" = $1 WHERE id = $2`;
-  const sqlParams = [
-    clientService,
-    updateService
-  ];
+  const sqlParams = [clientService, updateService];
 
   pool
-   .query(sqlText, sqlParams)
-   .then((result) => {
+    .query(sqlText, sqlParams)
+    .then((result) => {
       res.sendStatus(200);
     })
-   .catch((error) => {
+    .catch((error) => {
       console.log(error);
       res.sendStatus(500);
     });
 });
 
 router.put("/:id", (req, res) => {
-  const updateService = req.params.id;
-  const clientService = req.body.confirmed;
-  const sqlText = `UPDATE "appointments" SET "confirmed" = $1 WHERE id = $2`;
-  const sqlParams = [
-    clientService.date,
-    updateService
-  ];
+  const appointmentId = req.params.id;
+
+  console.log(appointmentId);
+  const status = req.body.status;
+  const sqlText = `UPDATE "appointments" SET "status" = $1 WHERE id = $2`;
+  const sqlParams = [status, appointmentId];
 
   pool
-   .query(sqlText, sqlParams)
-   .then((result) => {
+    .query(sqlText, sqlParams)
+    .then((result) => {
       res.sendStatus(200);
     })
-   .catch((error) => {
+    .catch((error) => {
       console.log(error);
       res.sendStatus(500);
     });

@@ -50,6 +50,7 @@ const ClientAppointment = () => {
       .get("/api/appointments")
       .then((response) => {
         setClientHistory(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -105,9 +106,11 @@ const ClientAppointment = () => {
               >
                 <TableCell align="left">{history.service}</TableCell>
                 <TableCell align="left">{history.description}</TableCell>
-                <TableCell align="left">{history.date}</TableCell>
-                <TableCell align="left">${history.total_cost}</TableCell>
-                {history.confirmed === false ? (
+                <TableCell align="left">
+                  {format(new Date(history.date), "MMM d, yyyy, h:mm a")}
+                </TableCell>
+                <TableCell align="left">${history.cost}</TableCell>
+                {history.status === false ? (
                   <TableCell align="left">Pending</TableCell>
                 ) : (
                   <TableCell align="left">Confirmed</TableCell>

@@ -51,7 +51,7 @@ export default function Hamburger() {
 
         {isAdmin === true ? (
           <Link to="/AdminAppointment/">
-            <MenuItem onClick={handleClose}>Admin</MenuItem>
+            <MenuItem onClick={handleClose}>View Appointments</MenuItem>
           </Link>
         ) : (
           <Link to="/ClientAppointment/">

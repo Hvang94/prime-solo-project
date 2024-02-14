@@ -13,7 +13,7 @@ function LogOutButton(props) {
       // is passed to it from it's parents through React props
       className={props.className}
       onClick={() => {dispatch({ type: 'LOGOUT' })
-    history.push('/home')}}
+    history.push('/Home')}}
     >
       Log Out
     </Button>
