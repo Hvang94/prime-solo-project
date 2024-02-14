@@ -24,7 +24,7 @@ router.post("/", (req, res) => {
   const sqlParams = [
     req.body.image,
     req.body.service,
-    req.body.total_cost,
+    req.body.cost,
     req.body.description,
   ];
 
@@ -56,9 +56,9 @@ router.delete("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const serviceId = req.params.id; 
-  const { image, service, total_cost, description } = req.body; 
+  const { image, service, cost, description } = req.body; 
   const sqlText = `UPDATE "services" SET "image" = $1, "service" = $2, "cost" = $3, "description" = $4 WHERE "id" = $5`;
-  const sqlParams = [image, service, total_cost, description, serviceId];
+  const sqlParams = [image, service, cost, description, serviceId];
 
   pool
     .query(sqlText, sqlParams)

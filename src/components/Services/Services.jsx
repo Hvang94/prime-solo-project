@@ -71,7 +71,7 @@ const Services = () => {
     setId(service.id);
     setImage(service.image);
     setService(service.service);
-    setCost(service.cost);
+    setCost(parseInt(service.cost));
     setDescription(service.description);
     setOpenEdit(true);
   };

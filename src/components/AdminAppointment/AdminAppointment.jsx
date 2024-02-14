@@ -17,6 +17,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { format } from "date-fns";
 
 const style = {
   position: "absolute",
@@ -33,10 +34,18 @@ const style = {
 const AdminAppointment = () => {
   const [confirmedServices, setConfirmedServices] = useState([]);
   const [newDate, setNewDate] = useState([]);
+  const [editedService, setEditedService] = useState({});
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setNewDate([])
+    setEditedService({})
+    setOpen(false)};
+
+  const handleOpen = (service) => {
+    setEditedService(service)
+    setOpen(true)
+  };
 
   useEffect(() => {
     renderAppointments()
@@ -46,7 +55,6 @@ const AdminAppointment = () => {
     axios
     .get("/api/appointments")
     .then((response) => {
-      console.log(response.data);
       setConfirmedServices(response.data);
     })
     .catch((error) => {
@@ -75,6 +83,7 @@ const AdminAppointment = () => {
       .then((response) => {
         console.log(response);
         renderAppointments()
+        setOpen(false)
       })
       .catch((error) => {
         console.log(error);
@@ -104,7 +113,7 @@ const AdminAppointment = () => {
               >
                 <TableCell align="left">{service.username}</TableCell>
                 <TableCell align="left">{service.service}</TableCell>
-                <TableCell align="left">{service.date}</TableCell>
+                <TableCell align="left">{format(new Date(service.date), "MMM d, yyyy, h:mm a")}</TableCell>
                 <TableCell align="left">${service.cost}</TableCell>
                 {service.status === false ? (
                   <TableCell align="left">Pending</TableCell>
@@ -117,7 +126,7 @@ const AdminAppointment = () => {
                   >
                     Confirm
                   </Button>
-                  <Button variant="contained" onClick={handleOpen}>Reschedule</Button>
+                  <Button variant="contained" onClick={() => handleOpen(service)}>Reschedule</Button>
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -140,8 +149,7 @@ const AdminAppointment = () => {
                               label="Basic date time picker"
                             />
                             <Button variant="contained"
-                              onClick={() => reschedule(service.id, newDate)}
-                            >
+                              onClick={() => reschedule(editedService.appointment_id, newDate)}>Reschedule
                               Confirm
                             </Button>
                           </DemoContainer>

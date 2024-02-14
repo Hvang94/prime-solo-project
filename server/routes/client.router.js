@@ -80,9 +80,9 @@ router.delete("/:id", (req, res) => {
 });
 router.patch("/:id", (req, res) => {
   const updateService = req.params.id;
-  const clientService = req.body.date;
+  const newDate = req.body.date;
   const sqlText = `UPDATE "appointments" SET "date" = $1 WHERE id = $2`;
-  const sqlParams = [clientService, updateService];
+  const sqlParams = [newDate, updateService];
 
   pool
     .query(sqlText, sqlParams)
