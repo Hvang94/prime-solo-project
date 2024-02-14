@@ -36,10 +36,19 @@ const ClientAppointment = () => {
   // const client = useSelector((store) => store.client);
   const [clientHistory, setClientHistory] = useState([]);
   const [newDate, setNewDate] = useState([]);
+  const [editedService, setEditedService] = useState({});
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setNewDate([]);
+    setEditedService({});
+    setOpen(false);
+  };
+
+  const handleOpen = (service) => {
+    setEditedService(service);
+    setOpen(true);
+  };
 
   useEffect(() => {
     renderAppointments();
@@ -57,14 +66,14 @@ const ClientAppointment = () => {
       });
   };
 
-  const reschedule = (history, newDate) => {
-    const id = history.id;
+  const reschedule = (id, newDate) => {
     const date = newDate.$d;
 
     axios
       .patch(`/api/appointments/${id}`, { date })
       .then((response) => {
         console.log(response);
+        renderAppointments();
       })
       .catch((error) => {
         console.log(error);
@@ -101,7 +110,7 @@ const ClientAppointment = () => {
           <TableBody>
             {clientHistory.map((history) => (
               <TableRow
-                key={history.id}
+                key={history.appointment_id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left">{history.service}</TableCell>
@@ -116,7 +125,10 @@ const ClientAppointment = () => {
                   <TableCell align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
-                  <Button variant="contained" onClick={handleOpen}>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleOpen(history)}
+                  >
                     Reschedule
                   </Button>
                   <Modal
@@ -142,7 +154,12 @@ const ClientAppointment = () => {
                             />
                             <Button
                               variant="contained"
-                              onClick={() => reschedule(history, newDate)}
+                              onClick={() =>
+                                reschedule(
+                                  editedService.appointment_id,
+                                  newDate
+                                )
+                              }
                               onClose={handleClose}
                             >
                               Confirm
