@@ -90,6 +90,19 @@ const AdminAppointment = () => {
       });
   };
 
+  const cancel = (id) => {
+
+    axios
+      .delete(`/api/appointments/${id}`)
+      .then((response) => {
+        console.log("DELETE good");
+        renderAppointments();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <h4>Pending</h4>
@@ -157,7 +170,7 @@ const AdminAppointment = () => {
                       </Typography>
                     </Box>
                   </Modal>
-                  <Button variant="contained" onClick={() => cancel(history)}>Cancel</Button>
+                  <Button variant="contained" onClick={() => cancel(service.appointment_id)}>Cancel</Button>
                 </TableCell>
               </TableRow>
             ))}
