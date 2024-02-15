@@ -81,7 +81,6 @@ const ClientAppointment = () => {
   };
 
   const cancel = (id) => {
-
     axios
       .delete(`/api/appointments/${id}`)
       .then((response) => {
@@ -168,7 +167,10 @@ const ClientAppointment = () => {
                       </Typography>
                     </Box>
                   </Modal>
-                  <Button variant="contained" onClick={() => cancel(history.appointment_id)}>
+                  <Button
+                    variant="contained"
+                    onClick={() => cancel(history.appointment_id)}
+                  >
                     Cancel
                   </Button>
                 </TableCell>

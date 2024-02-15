@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 export default function Hamburger() {
   const isAdmin = useSelector((store) => store.user.admin);
+  const isLoggedIn = useSelector((store) => store.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

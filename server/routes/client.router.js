@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   const isAdmin = req.user.admin;
 
   let sqlText = `
-  SELECT a.id as appointment_id, s.service, s.description, a.status, a.date, u.username
+  SELECT a.id as appointment_id, s.service, s.description, s.cost, a.status, a.date, u.username
   FROM "appointments" a
   JOIN "services" s ON a.service_id = s.id
   JOIN "user" u ON a.user_id = u.id

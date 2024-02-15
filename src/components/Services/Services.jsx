@@ -15,9 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const style = {
   position: "absolute",
@@ -44,9 +42,8 @@ const Services = () => {
   const formData = { image, service, cost, description };
 
   const isAdmin = useSelector((store) => store.user.admin);
-  const isAuthenticated = useSelector((store) => store.user);
-
-  console.log(isAuthenticated)
+  //   const isAuthenticated = useSelector((store) => store.user);
+  // console.log(isAuthenticated)
 
   // Add service modal
   const [open, setOpen] = React.useState(false);
@@ -84,7 +81,11 @@ const Services = () => {
 
   const onClick = (service) => {
     console.log(service);
+    // if (isAuthenticated !== null) {
     dispatch({ type: "SELECTED_SERVICE", payload: service });
+    // } else {
+    //   history.push("/login");
+    // }
   };
 
   const handleSubmit = (event) => {
@@ -255,7 +256,7 @@ const Services = () => {
                 <TableCell align="left">{service.description}</TableCell>
                 <TableCell align="left">${service.cost}</TableCell>
                 <TableCell>
-                  {/* {isAdmin === false && ( */}
+                  {isAdmin === false && (
                     <Link to="/Confirmation/">
                       <Button
                         variant="contained"
@@ -264,7 +265,7 @@ const Services = () => {
                         Book me
                       </Button>
                     </Link>
-                  {/* )} */}
+                  )}
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (
