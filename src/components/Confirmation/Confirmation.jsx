@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -13,9 +13,6 @@ import dayjs from "dayjs";
 const Confirmation = () => {
 
   const history = useHistory();
-  // const { image, service, total_cost, description } = useSelector(
-  //   (store) => store.selected
-  // );
   const [dateTime, setDateTime] = useState([]);
   // const date = dateTime.$d;
 
@@ -25,7 +22,7 @@ const Confirmation = () => {
   console.log(selectedService)
 
   const confirm = async () => {
-    alert("Thank you!");
+  
 
     const formattedDate = dayjs(dateTime).format();
     const payload = {
@@ -41,10 +38,13 @@ const Confirmation = () => {
       .post("/api/appointments", payload)
       .then((response) => {
         console.log(response);
+        alert("Thank you!");
         history.push('/home');
       })
       .catch((error) => {
         console.log(error);
+        alert("You have to be logged in to book an appointment. Please login.")
+        history.push('/login');
       });
   };
 

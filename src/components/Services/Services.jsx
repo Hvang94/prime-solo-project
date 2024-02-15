@@ -44,7 +44,9 @@ const Services = () => {
   const formData = { image, service, cost, description };
 
   const isAdmin = useSelector((store) => store.user.admin);
-  const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
+  const isAuthenticated = useSelector((store) => store.user);
+
+  console.log(isAuthenticated)
 
   // Add service modal
   const [open, setOpen] = React.useState(false);
@@ -253,7 +255,7 @@ const Services = () => {
                 <TableCell align="left">{service.description}</TableCell>
                 <TableCell align="left">${service.cost}</TableCell>
                 <TableCell>
-                  {isAdmin === false && (
+                  {/* {isAdmin === false && ( */}
                     <Link to="/Confirmation/">
                       <Button
                         variant="contained"
@@ -262,7 +264,7 @@ const Services = () => {
                         Book me
                       </Button>
                     </Link>
-                  )}
+                  {/* )} */}
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (
