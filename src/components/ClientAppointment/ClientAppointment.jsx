@@ -103,6 +103,7 @@ const ClientAppointment = () => {
               <TableCell align="left">Date & Time</TableCell>
               <TableCell align="left">Cost</TableCell>
               <TableCell align="left">Status</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -112,7 +113,7 @@ const ClientAppointment = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left">{history.service}</TableCell>
-                <TableCell align="left">{history.description}</TableCell>
+                <TableCell className="clientDescription" align="left">{history.description}</TableCell>
                 <TableCell align="left">
                   {format(new Date(history.date), "MMM d, yyyy, h:mm a")}
                 </TableCell>
@@ -126,6 +127,7 @@ const ClientAppointment = () => {
                   <Button
                     variant="contained"
                     onClick={() => handleOpen(history)}
+                    className="clientBtn"
                   >
                     Reschedule
                   </Button>
@@ -170,6 +172,7 @@ const ClientAppointment = () => {
                   <Button
                     variant="contained"
                     onClick={() => cancel(history.appointment_id)}
+                    className="clientBtn"
                   >
                     Cancel
                   </Button>

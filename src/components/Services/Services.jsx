@@ -141,9 +141,13 @@ const Services = () => {
 
   return (
     <>
-      <h3>Services</h3>
+      <h3 className="serviceHeader">Services</h3>
       {isAdmin === true && (
-        <Button variant="contained" onClick={handleOpen}>
+        <Button
+          variant="contained"
+          className="addServiceBtn"
+          onClick={handleOpen}
+        >
           Add Service
         </Button>
       )}

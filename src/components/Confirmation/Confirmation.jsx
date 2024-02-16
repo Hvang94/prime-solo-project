@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import Button from "@mui/material/Button";
 
 const Confirmation = () => {
   const history = useHistory();
@@ -44,21 +45,28 @@ const Confirmation = () => {
   };
 
   return (
-    <div>
+    <div className="confirmation">
       <h3>{selectedService.service}</h3>
-      <img src={selectedService.image} />
-      <p>{selectedService.description}</p>
-      <p>${selectedService.cost}</p>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DateTimePicker"]}>
-          <DateTimePicker
-            value={dateTime}
-            onChange={(newDateTime) => setDateTime(newDateTime)}
-            label="Basic date time picker"
-          />
-        </DemoContainer>
-      </LocalizationProvider>
-      <button onClick={() => confirm()}>Confirm</button>
+      <div className="imgDescript">
+        <img className="confirmImg" src={selectedService.image} />
+        <div className="column">
+        <p>{selectedService.description}</p>
+
+        <p>${selectedService.cost}</p>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DateTimePicker"]}>
+            <DateTimePicker
+              value={dateTime}
+              onChange={(newDateTime) => setDateTime(newDateTime)}
+              label="Basic date time picker"
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+        <Button className="confirmBtn" variant="contained" onClick={() => confirm()}>
+          Confirm
+        </Button>
+        </div>
+      </div>
     </div>
   );
 };

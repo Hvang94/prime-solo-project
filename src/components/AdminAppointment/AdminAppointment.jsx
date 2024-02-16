@@ -38,37 +38,37 @@ const AdminAppointment = () => {
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
-    setNewDate([])
-    setEditedService({})
-    setOpen(false)};
+    setNewDate([]);
+    setEditedService({});
+    setOpen(false);
+  };
 
   const handleOpen = (service) => {
-    setEditedService(service)
-    setOpen(true)
+    setEditedService(service);
+    setOpen(true);
   };
 
   useEffect(() => {
-    renderAppointments()
+    renderAppointments();
   }, []);
 
   const renderAppointments = () => {
     axios
-    .get("/api/appointments")
-    .then((response) => {
-      setConfirmedServices(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+      .get("/api/appointments")
+      .then((response) => {
+        setConfirmedServices(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const confirm = (id, status) => {
-    
     axios
       .put(`/api/appointments/${id}`, { status: true })
       .then((response) => {
         console.log(response);
-        renderAppointments()
+        renderAppointments();
       })
       .catch((error) => {
         console.log(error);
@@ -82,8 +82,8 @@ const AdminAppointment = () => {
       .patch(`/api/appointments/${id}`, { date })
       .then((response) => {
         console.log(response);
-        renderAppointments()
-        setOpen(false)
+        renderAppointments();
+        setOpen(false);
       })
       .catch((error) => {
         console.log(error);
@@ -91,7 +91,6 @@ const AdminAppointment = () => {
   };
 
   const cancel = (id) => {
-
     axios
       .delete(`/api/appointments/${id}`)
       .then((response) => {
@@ -105,7 +104,7 @@ const AdminAppointment = () => {
 
   return (
     <>
-      <h4>Pending</h4>
+      <h4 className="adminPending">Pending</h4>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -126,7 +125,9 @@ const AdminAppointment = () => {
               >
                 <TableCell align="left">{service.username}</TableCell>
                 <TableCell align="left">{service.service}</TableCell>
-                <TableCell align="left">{format(new Date(service.date), "MMM d, yyyy, h:mm a")}</TableCell>
+                <TableCell align="left">
+                  {format(new Date(service.date), "MMM d, yyyy, h:mm a")}
+                </TableCell>
                 <TableCell align="left">${service.cost}</TableCell>
                 {service.status === false ? (
                   <TableCell align="left">Pending</TableCell>
@@ -134,12 +135,22 @@ const AdminAppointment = () => {
                   <TableCell align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
-                  <Button variant="contained"
-                    onClick={() => confirm(service.appointment_id, service.status)}
+                  <Button
+                    variant="contained"
+                    className="adminButton"
+                    onClick={() =>
+                      confirm(service.appointment_id, service.status)
+                    }
                   >
                     Confirm
                   </Button>
-                  <Button variant="contained" onClick={() => handleOpen(service)}>Reschedule</Button>
+                  <Button
+                    variant="contained"
+                    className="adminButton"
+                    onClick={() => handleOpen(service)}
+                  >
+                    Reschedule
+                  </Button>
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -161,16 +172,29 @@ const AdminAppointment = () => {
                               }
                               label="Basic date time picker"
                             />
-                            <Button variant="contained"
-                              onClick={() => reschedule(editedService.appointment_id, newDate)}>Reschedule
-                              Confirm
+                            <Button
+                              variant="contained"
+                              onClick={() =>
+                                reschedule(
+                                  editedService.appointment_id,
+                                  newDate
+                                )
+                              }
+                            >
+                              Reschedule Confirm
                             </Button>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Typography>
                     </Box>
                   </Modal>
-                  <Button variant="contained" onClick={() => cancel(service.appointment_id)}>Cancel</Button>
+                  <Button
+                    variant="contained"
+                    className="adminButton"
+                    onClick={() => cancel(service.appointment_id)}
+                  >
+                    Cancel
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

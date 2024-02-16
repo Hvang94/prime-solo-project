@@ -14,7 +14,6 @@ import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import Home from "../Home/Home";
-import AboutMe from "../AboutMe/AboutMe";
 import Services from "../Services/Services";
 import Confirmation from "../Confirmation/Confirmation";
 import ClientAppointment from "../ClientAppointment/ClientAppointment.jsx";

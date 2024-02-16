@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector } from "react-redux";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Hamburger() {
   const isAdmin = useSelector((store) => store.user.admin);
@@ -27,7 +28,7 @@ export default function Hamburger() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        🐼
+        <MenuIcon />
       </Button>
       <Menu
         id="basic-menu"
@@ -42,9 +43,6 @@ export default function Hamburger() {
           <MenuItem onClick={handleClose}>Home</MenuItem>
         </Link>
 
-        {/* <Link to="/about/">
-          <MenuItem onClick={handleClose}>About Me</MenuItem>
-        </Link> */}
 
         <Link to="/Services/">
           <MenuItem onClick={handleClose}>Services</MenuItem>

@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   if (!req.isAuthenticated() || !req.user) {
-    // If the user is not authenticated, return an unauthorized status
+
     return res.sendStatus(401);
   }
 
@@ -19,13 +19,13 @@ router.get("/", (req, res) => {
 
   const sqlParams = [];
 
-  // If the user is not an admin, add a WHERE clause to filter by user_id
+ 
   if (!isAdmin) {
     sqlText += ` WHERE a.user_id = $1`;
-    sqlParams.push(req.user.id); // Add the user's ID to the parameters array
+    sqlParams.push(req.user.id); 
   }
 
-  // Add an ORDER BY clause to both admin and regular user queries
+  
   sqlText += ` ORDER BY a.date ASC;`;
 
   pool

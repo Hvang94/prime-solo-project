@@ -5,7 +5,7 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
 }
 
@@ -110,10 +110,89 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
-p {
+
+.welcome {
+  margin-left: 50px;
+}
+.portrait {
   margin: 30px;
 }
-.portrait{
-  margin: 30px;
-  width: 15%;
+.aboutMeTitle {
+  text-align: center;
+}
+
+.description {
+  background-color: lavender;
+  color: black;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.welcome {
+  margin-bottom: 50px;
+  margin-top: 27px;
+  margin-left: 30px;
+}
+
+.aboutMeDescription {
+  margin-bottom: 50px;
+  margin-top: 27px;
+  margin-left: 30px;
+}
+.sumting {
+  display: flex;
+  justify-content: space-between;
+}
+.oderting {
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  white-space: nowrap;
+  width: 120px;
+}
+.adminButton {
+  margin: 10px !important;
+}
+
+.adminPending {
+  padding: 10px;
+}
+
+.serviceHeader {
+  padding: 23px;
+}
+.addServiceBtn {
+  margin: 23px !important;
+}
+
+.clientDescription {
+  width: 500px;
+}
+.clientBtn {
+  margin: 10px !important;
+}
+
+.confirmation {
+  padding: 50px;
+}
+
+.confirmImg {
+  width: 20%;
+}
+.imgDescript {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmBtn {
+  margin: 10px !important;
 }
