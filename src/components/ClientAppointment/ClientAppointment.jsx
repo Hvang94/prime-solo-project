@@ -98,12 +98,12 @@ const ClientAppointment = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Service</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="left">Date & Time</TableCell>
-              <TableCell align="left">Cost</TableCell>
-              <TableCell align="left">Status</TableCell>
-              <TableCell align="left"></TableCell>
+              <TableCell className="serviceDescriptions">Service</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Description</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Date & Time</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Cost</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Status</TableCell>
+              <TableCell className="serviceDescriptions" align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -112,16 +112,16 @@ const ClientAppointment = () => {
                 key={history.appointment_id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">{history.service}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">{history.service}</TableCell>
                 <TableCell className="clientDescription" align="left">{history.description}</TableCell>
-                <TableCell align="left">
+                <TableCell className="serviceDescriptions" align="left">
                   {format(new Date(history.date), "MMM d, yyyy, h:mm a")}
                 </TableCell>
-                <TableCell align="left">${history.cost}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">${history.cost}</TableCell>
                 {history.status === false ? (
-                  <TableCell align="left">Pending</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">Pending</TableCell>
                 ) : (
-                  <TableCell align="left">Confirmed</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
                   <Button

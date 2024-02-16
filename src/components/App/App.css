@@ -127,18 +127,21 @@ input {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    margin-top: 75px;
 }
 
 .welcome {
   margin-bottom: 50px;
   margin-top: 27px;
   margin-left: 30px;
+  font-size: 22px;
 }
 
 .aboutMeDescription {
   margin-bottom: 50px;
   margin-top: 27px;
   margin-left: 30px;
+  font-size: 22px;
 }
 .sumting {
   display: flex;
@@ -170,6 +173,7 @@ button {
 
 .clientDescription {
   width: 500px;
+  font-size: 20px !important;
 }
 .clientBtn {
   margin: 10px !important;
@@ -195,4 +199,8 @@ button {
 
 .confirmBtn {
   margin: 10px !important;
+}
+
+.serviceDescriptions {
+  font-size: 20px !important;
 }

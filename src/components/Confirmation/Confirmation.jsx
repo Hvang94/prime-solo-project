@@ -46,13 +46,13 @@ const Confirmation = () => {
 
   return (
     <div className="confirmation">
-      <h3>{selectedService.service}</h3>
+      <h3 className="serviceDescriptions">{selectedService.service}</h3>
       <div className="imgDescript">
         <img className="confirmImg" src={selectedService.image} />
         <div className="column">
-        <p>{selectedService.description}</p>
+        <p className="serviceDescriptions">{selectedService.description}</p>
 
-        <p>${selectedService.cost}</p>
+        <p className="serviceDescriptions">${selectedService.cost}</p>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateTimePicker"]}>
             <DateTimePicker

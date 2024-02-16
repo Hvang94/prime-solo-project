@@ -23,13 +23,14 @@
 }
 
 .navLink {
-  display: inline-block;
-  color: blue;
+  display: flex;
+  justify-content: space-evenly;
+  color: #1976d2;
   background-color: lavender;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 20px !important;
 
   /* these last two make the logout button in
   the nav bar look like another link */
@@ -38,9 +39,9 @@
   outline: 0;
 }
 
-.navLink:hover {
+/* .navLink:hover {
   background-color: #008183;
-}
+} */
 
 .logo{
 width: 15%;

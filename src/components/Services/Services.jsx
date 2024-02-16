@@ -42,8 +42,8 @@ const Services = () => {
   const formData = { image, service, cost, description };
 
   const isAdmin = useSelector((store) => store.user.admin);
-  //   const isAuthenticated = useSelector((store) => store.user);
-  // console.log(isAuthenticated)
+  const isAuthenticated = useSelector((store) => store.user.id);
+  console.log(isAuthenticated);
 
   // Add service modal
   const [open, setOpen] = React.useState(false);
@@ -253,23 +253,21 @@ const Services = () => {
                 key={service.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{service.service}</TableCell>
-                <TableCell align="center">
+                <TableCell className="serviceDescriptions" align="center">{service.service}</TableCell>
+                <TableCell className="serviceDescriptions" align="center">
                   <img src={service.image} />
                 </TableCell>
-                <TableCell align="left">{service.description}</TableCell>
-                <TableCell align="left">${service.cost}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">{service.description}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">${service.cost}</TableCell>
                 <TableCell>
-                  {isAdmin === false && (
-                    <Link to="/Confirmation/">
-                      <Button
-                        variant="contained"
-                        onClick={() => onClick(service)}
-                      >
-                        Book me
-                      </Button>
-                    </Link>
-                  )}
+                  <Link to="/Confirmation/">
+                    <Button
+                      variant="contained"
+                      onClick={() => onClick(service)}
+                    >
+                      Book me
+                    </Button>
+                  </Link>
                 </TableCell>
                 <TableCell>
                   {isAdmin === true && (
