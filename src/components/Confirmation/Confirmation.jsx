@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
+import Swal from 'sweetalert2'
 
 const Confirmation = () => {
   const history = useHistory();
@@ -34,12 +35,22 @@ const Confirmation = () => {
       .post("/api/appointments", payload)
       .then((response) => {
         console.log(response);
-        alert("Thank you!");
+        // alert("Thank you for booking with us!");
+        Swal.fire({
+          icon: "success",
+          title: "Thank you for booking with us!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         history.push("/home");
       })
       .catch((error) => {
         console.log(error);
-        alert("You have to be logged in to book an appointment. Please login.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You have to be logged in to book an appointment. Please login.",
+        });
         history.push("/login");
       });
   };

@@ -104,17 +104,17 @@ const AdminAppointment = () => {
 
   return (
     <>
-      <h4 className="adminPending">Pending</h4>
+      <h4 className="ad">Pending</h4>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Client Name</TableCell>
-              <TableCell>Service</TableCell>
-              <TableCell align="left">Date & Time</TableCell>
-              <TableCell align="left">Cost</TableCell>
-              <TableCell align="left">Status</TableCell>
-              <TableCell align="left"></TableCell>
+              <TableCell className="serviceDescriptions">Client Name</TableCell>
+              <TableCell className="serviceDescriptions">Service</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Date & Time</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Cost</TableCell>
+              <TableCell className="serviceDescriptions" align="left">Status</TableCell>
+              <TableCell className="serviceDescriptions" align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -123,16 +123,16 @@ const AdminAppointment = () => {
                 key={service.appointment_id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">{service.username}</TableCell>
-                <TableCell align="left">{service.service}</TableCell>
-                <TableCell align="left">
+                <TableCell className="serviceDescriptions" align="left">{service.username}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">{service.service}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">
                   {format(new Date(service.date), "MMM d, yyyy, h:mm a")}
                 </TableCell>
-                <TableCell align="left">${service.cost}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">${service.cost}</TableCell>
                 {service.status === false ? (
-                  <TableCell align="left">Pending</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">Pending</TableCell>
                 ) : (
-                  <TableCell align="left">Confirmed</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">Confirmed</TableCell>
                 )}
                 <TableCell align="left">
                   <Button
