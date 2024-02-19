@@ -1,46 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Nav.css";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import { useSelector } from "react-redux";
 
 function Nav() {
-  const user = useSelector((store) => store.user);
-
+  const isAdmin = useSelector((store) => store.user.admin);
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
-      </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
+    <>
+      <div className="nav">
+        <Link to="/Home">
+          <img className="logo" src="images/logo.png" />
         </Link>
+        
+        <Link className="navLink" to="/Home">
+          HOME
+        </Link>
+        <Link className="navLink" to="/Services">
+          SERVICES
+        </Link>
+        {isAdmin === true ? (
+          <Link className="navLink" to="/AdminAppointment/">VIEW APPOINTMENTS</Link>
+        ) : (
+          <Link className="navLink" to="/ClientAppointment/">VIEW APPOINTMENTS</Link>
+        )}
+        <Link className="navLink" to="login">LOGIN/REGISTER</Link>
+        <LogOutButton className="navLink" />
       </div>
-    </div>
+    </>
   );
 }
 

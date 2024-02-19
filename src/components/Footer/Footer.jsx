@@ -1,13 +1,14 @@
-import React from 'react';
-import './Footer.css';
+import React from "react";
+import "./Footer.css";
 
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
-
-function Footer() {
-  return <footer>&copy; Prime Digital Academy</footer>;
-}
+const Footer = () => {
+  return (
+    <footer className="footer">
+      <p>(651)123-4567</p>
+      <a href="mailto: hmoovzongvang@gmail.com">hmoovzongvang@gmail.com</a>
+      <p>123 Here Drive. Saint Paul, MN 55119</p>
+    </footer>
+  );
+};
 
 export default Footer;
