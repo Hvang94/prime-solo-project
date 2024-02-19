@@ -30,7 +30,7 @@ const Home = () => {
       </Container>
 
       <div className="title"></div>
-      <h1 className="aboutMeTitle">About Me</h1>
+      <h1 className="aboutMeTitle">Get to know your esthetician!</h1>
       <Container className="description">
         <Grid container className="sumting">
           <Grid item xs={7} sm={7} md={7} lg={7} xl={7}>

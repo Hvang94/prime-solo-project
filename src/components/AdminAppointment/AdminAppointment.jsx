@@ -111,10 +111,19 @@ const AdminAppointment = () => {
             <TableRow>
               <TableCell className="serviceDescriptions">Client Name</TableCell>
               <TableCell className="serviceDescriptions">Service</TableCell>
-              <TableCell className="serviceDescriptions" align="left">Date & Time</TableCell>
-              <TableCell className="serviceDescriptions" align="left">Cost</TableCell>
-              <TableCell className="serviceDescriptions" align="left">Status</TableCell>
-              <TableCell className="serviceDescriptions" align="left"></TableCell>
+              <TableCell className="serviceDescriptions" align="left">
+                Date & Time
+              </TableCell>
+              <TableCell className="serviceDescriptions" align="left">
+                Cost
+              </TableCell>
+              <TableCell className="serviceDescriptions" align="left">
+                Status
+              </TableCell>
+              <TableCell
+                className="serviceDescriptions"
+                align="left"
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -123,16 +132,26 @@ const AdminAppointment = () => {
                 key={service.appointment_id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell className="serviceDescriptions" align="left">{service.username}</TableCell>
-                <TableCell className="serviceDescriptions" align="left">{service.service}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">
+                  {service.username}
+                </TableCell>
+                <TableCell className="serviceDescriptions" align="left">
+                  {service.service}
+                </TableCell>
                 <TableCell className="serviceDescriptions" align="left">
                   {format(new Date(service.date), "MMM d, yyyy, h:mm a")}
                 </TableCell>
-                <TableCell className="serviceDescriptions" align="left">${service.cost}</TableCell>
+                <TableCell className="serviceDescriptions" align="left">
+                  ${service.cost}
+                </TableCell>
                 {service.status === false ? (
-                  <TableCell className="serviceDescriptions" align="left">Pending</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">
+                    Pending
+                  </TableCell>
                 ) : (
-                  <TableCell className="serviceDescriptions" align="left">Confirmed</TableCell>
+                  <TableCell className="serviceDescriptions" align="left">
+                    Confirmed
+                  </TableCell>
                 )}
                 <TableCell align="left">
                   <Button
@@ -181,7 +200,7 @@ const AdminAppointment = () => {
                                 )
                               }
                             >
-                              Reschedule Confirm
+                              Confirm
                             </Button>
                           </DemoContainer>
                         </LocalizationProvider>

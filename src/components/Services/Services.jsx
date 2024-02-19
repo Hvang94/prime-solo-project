@@ -44,7 +44,6 @@ const Services = () => {
 
   const isAdmin = useSelector((store) => store.user.admin);
   const isAuthenticated = useSelector((store) => store.user.id);
-  console.log(isAuthenticated);
 
   // Add service modal
   const [open, setOpen] = React.useState(false);
